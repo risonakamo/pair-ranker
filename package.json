@@ -3,8 +3,8 @@
   "version": "0.0.0-DEV",
   "description": "",
   "scripts": {
-    "server":"node testserver/testserver",
-    "watch":"webpack --watch"
+    "server": "node testserver/testserver",
+    "watch": "webpack --watch"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -12,6 +12,7 @@
     "@babel/preset-typescript": "^7.12.7",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/react-svg": "^5.0.0",
     "babel-loader": "^8.2.1",
     "css-loader": "^5.0.1",
     "fork-ts-checker-webpack-plugin": "^6.0.3",
@@ -26,6 +27,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-svg": "^11.1.4"
   }
 }

@@ -1,8 +1,11 @@
-@choice-arrow-side-space: 25px;
+@choice-arrow-side-space: 30px;
 @choice-arrow-size-normal: 25px;
 
-@choice-arrow-size-big: 30px;
-@choice-arrow-side-space-hover: 30px;
+@choice-arrow-size-big: @choice-arrow-size-normal+5px;
+@choice-arrow-side-space-hover: @choice-arrow-side-space+5px;
+
+@choice1-colour-TEMP: #387aff;
+@choice2-colour-TEMP: #f5009b;
 
 .pair-choice
 {
@@ -13,24 +16,29 @@
     {
         position: relative;
         flex: 1;
+        color: var(--choice-colour);
         cursor: pointer;
 
         .choice-arrow
         {
             position: absolute;
-            right: -@choice-arrow-side-space;
             width: @choice-arrow-size-normal;
             top: 50%;
+            right: -@choice-arrow-side-space;
             margin-top: @choice-arrow-size-normal/-2;
+            opacity: .6;
         }
 
         &.left
         {
             text-align: right;
+            --choice-colour: @choice1-colour-TEMP;
         }
 
         &.right
         {
+            --choice-colour: @choice2-colour-TEMP;
+
             .choice-arrow
             {
                 right: usent;
@@ -47,6 +55,7 @@
                 width: @choice-arrow-size-big;
                 margin-top: @choice-arrow-size-big/-2;
                 right: -@choice-arrow-side-space-hover;
+                opacity: 1;
             }
 
             &.right
@@ -62,6 +71,6 @@
 
     .mid-split
     {
-        width: 100px;
+        width: 120px;
     }
 }

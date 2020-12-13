@@ -1,18 +1,20 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import {render} from "react-dom";
+
+import PairRank from "./components/pair-rank/pair-rank";
 
 import "./index.less";
 
 function IndexMain():JSX.Element
 {
   return <>
-    hello
+    <PairRank/>
   </>;
 }
 
 function main()
 {
-  ReactDOM.render(<IndexMain/>,document.querySelector(".main"));
+  render(<IndexMain/>,document.querySelector(".main"));
 }
 
 window.onload=main;

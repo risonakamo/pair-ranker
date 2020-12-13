@@ -1,3 +1,9 @@
+@choice-arrow-side-space: 25px;
+@choice-arrow-size-normal: 25px;
+
+@choice-arrow-size-big: 30px;
+@choice-arrow-side-space-hover: 30px;
+
 .pair-choice
 {
     display: flex;
@@ -5,11 +11,52 @@
 
     .choice
     {
+        position: relative;
         flex: 1;
+        cursor: pointer;
+
+        .choice-arrow
+        {
+            position: absolute;
+            right: -@choice-arrow-side-space;
+            width: @choice-arrow-size-normal;
+            top: 50%;
+            margin-top: @choice-arrow-size-normal/-2;
+        }
 
         &.left
         {
             text-align: right;
+        }
+
+        &.right
+        {
+            .choice-arrow
+            {
+                right: usent;
+                left: -@choice-arrow-side-space;
+            }
+        }
+
+        &:hover
+        {
+            font-weight: 500;
+
+            .choice-arrow
+            {
+                width: @choice-arrow-size-big;
+                margin-top: @choice-arrow-size-big/-2;
+                right: -@choice-arrow-side-space-hover;
+            }
+
+            &.right
+            {
+                .choice-arrow
+                {
+                    right: unset;
+                    left: -@choice-arrow-side-space-hover;
+                }
+            }
         }
     }
 

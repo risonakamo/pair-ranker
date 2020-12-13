@@ -13,6 +13,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-svg": "^5.0.0",
+    "@types/simplebar": "^5.1.1",
     "babel-loader": "^8.2.1",
     "css-loader": "^5.0.1",
     "fork-ts-checker-webpack-plugin": "^6.0.3",
@@ -28,6 +29,8 @@
     "express": "^4.17.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-svg": "^11.1.4"
+    "react-svg": "^11.1.4",
+    "simplebar": "^5.3.0",
+    "simplebar-react": "^2.3.0"
   }
 }

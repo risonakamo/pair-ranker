@@ -26,7 +26,14 @@
             top: 50%;
             right: -@choice-arrow-side-space;
             margin-top: @choice-arrow-size-normal/-2;
-            opacity: .6;
+            opacity: .8;
+            font-size: 0;
+
+            svg
+            {
+                width: @choice-arrow-size-normal;
+                height: @choice-arrow-size-normal;
+            }
         }
 
         &.left
@@ -56,6 +63,13 @@
                 margin-top: @choice-arrow-size-big/-2;
                 right: -@choice-arrow-side-space-hover;
                 opacity: 1;
+
+                svg
+                {
+                    width: @choice-arrow-size-big;
+                    height: @choice-arrow-size-big;
+                    stroke: var(--choice-colour);
+                }
             }
 
             &.right

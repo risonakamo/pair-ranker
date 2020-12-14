@@ -9,6 +9,6 @@ import "simplebar/dist/simplebar.min.css";
 export default function PairHistory():JSX.Element
 {
   return <div className="pair-history">
-    hello
+    <APair/>
   </div>;
 }

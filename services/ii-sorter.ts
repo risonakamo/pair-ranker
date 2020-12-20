@@ -4,14 +4,16 @@ import ComparisonSaver from "./compare-save";
 
 export default class IterableInsertionSorter
 {
-    items:SortItem[]
-    currentIndex:number
-    compareIndex:number
+    private items:SortItem[]
+    private currentIndex:number
+    private compareIndex:number
 
-    currentComparison:ChoiceItemsInner|null
-    userSelection:boolean|null
+    private currentComparison:ChoiceItemsInner|null
+    private userSelection:boolean|null
 
-    csaver:ComparisonSaver
+    private csaver:ComparisonSaver
+
+    private done:boolean
 
     constructor(items:string[])
     {
@@ -29,6 +31,97 @@ export default class IterableInsertionSorter
         this.userSelection=null;
 
         this.csaver=new ComparisonSaver;
+
+        this.done=false;
+    }
+
+    choice():ChoiceItems|null
+    {
+        if (this.done)
+        {
+            return null;
+        }
+
+        if (this.currentComparison)
+        {
+            return publiciseChoiceItems(this.currentComparison);
+        }
+
+        this.setChoice();
+
+        return this.choice();
+
+    }
+
+    choose(choice:number):void
+    {
+        this.csaver.makeCompare(this.items[this.currentIndex],this.items[this.compareIndex],choice);
+        this.setChoice(true);
+    }
+
+    getResult():string[]
+    {
+        return _.map(this.items,(x:SortItem)=>{
+            return x.value;
+        });
+    }
+
+    private setChoice(compareCurrent:boolean=false):void
+    {
+        if (!compareCurrent)
+        {
+            this.compareIndex--;
+        }
+
+        if (this.compareIndex<0)
+        {
+            this.insertInto(-1);
+        }
+
+        // compare the current index with the new compare item
+        var comparison:ChoiceItemsInner=[this.items[this.currentIndex],this.items[this.compareIndex]];
+        var autoCompare:number|null=this.csaver.compare(...comparison);
+
+        // if the auto compare failed, we have never seen this comparison before. so set it as the current comparison
+        // and await an compare
+        if (!autoCompare)
+        {
+            this.currentComparison=comparison;
+        }
+
+        // if the auto compare was >=0, perform a swap. otherwise, proceed with setting the choice.
+        else if (autoCompare>=0)
+        {
+            this.insertInto(this.compareIndex);
+            this.setChoice();
+        }
+    }
+
+    /** move the current item to the specified position in the items array. only works if the new position
+     *  is before the current position. also advances the current pointer */
+    private insertInto(position:number):void
+    {
+        var currentItem:SortItem=this.items[this.currentIndex];
+
+        _.remove(this.items,(x:SortItem)=>{
+            return x.index==this.currentIndex;
+        });
+
+        this.items.splice(position+1,0,currentItem);
+
+        this.advanceCurrent();
+    }
+
+    /** advance the current pointer and set the compare index.*/
+    private advanceCurrent():void
+    {
+        this.currentIndex++;
+        this.compareIndex=this.currentIndex;
+
+        if (this.currentIndex>this.items.length)
+        {
+            this.done=true;
+        }
     }
 
     private csaverTest():void
@@ -46,6 +139,6 @@ function publiciseChoiceItems(choices:ChoiceItemsInner):ChoiceItems
 {
     return [
         choices[0].value,
-        choices[0].value
+        choices[1].value
     ];
 }

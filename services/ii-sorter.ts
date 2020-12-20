@@ -6,6 +6,9 @@ export default class IterableInsertionSorter
     currentIndex:number
     compareIndex:number
 
+    currentComparison:ChoiceItemsInner|null
+    userSelection:boolean|null
+
     constructor(items:string[])
     {
         this.items=_.map(items,(x:string,i:number)=>{
@@ -17,5 +20,17 @@ export default class IterableInsertionSorter
 
         this.currentIndex=1;
         this.compareIndex=1;
+
+        this.currentComparison=null;
+        this.userSelection=null;
     }
+}
+
+/** convert private inner choice items type to public type */
+function publiciseChoiceItems(choices:ChoiceItemsInner):ChoiceItems
+{
+    return [
+        choices[0].value,
+        choices[0].value
+    ];
 }

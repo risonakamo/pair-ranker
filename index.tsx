@@ -26,7 +26,12 @@ function main()
   isort.choose(1);
 
   console.log(isort.choice());
+  isort.choose(-1);
+
+  console.log(isort.choice());
   isort.choose(1);
+
+  console.log(isort.getResult());
   // --- END TESTING ---
 }
 

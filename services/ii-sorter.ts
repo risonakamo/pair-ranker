@@ -9,7 +9,6 @@ export default class IterableInsertionSorter
     private compareIndex:number
 
     private currentComparison:ChoiceItemsInner|null
-    private userSelection:boolean|null
 
     private csaver:ComparisonSaver
 
@@ -28,7 +27,6 @@ export default class IterableInsertionSorter
         this.compareIndex=1;
 
         this.currentComparison=null;
-        this.userSelection=null;
 
         this.csaver=new ComparisonSaver;
 
@@ -55,7 +53,13 @@ export default class IterableInsertionSorter
 
     choose(choice:number):void
     {
+        if (this.done)
+        {
+            return;
+        }
+
         this.csaver.makeCompare(this.items[this.currentIndex],this.items[this.compareIndex],choice);
+        this.currentComparison=null;
         this.setChoice(true);
     }
 
@@ -68,6 +72,11 @@ export default class IterableInsertionSorter
 
     private setChoice(compareCurrent:boolean=false):void
     {
+        if (this.done)
+        {
+            return;
+        }
+
         if (!compareCurrent)
         {
             this.compareIndex--;
@@ -76,6 +85,7 @@ export default class IterableInsertionSorter
         if (this.compareIndex<0)
         {
             this.insertInto(-1);
+            this.setChoice();
         }
 
         // compare the current index with the new compare item
@@ -95,12 +105,24 @@ export default class IterableInsertionSorter
             this.insertInto(this.compareIndex);
             this.setChoice();
         }
+
+        // if auto compare was <0, then continue moving the compare index.
+        else
+        {
+            this.setChoice();
+        }
     }
 
     /** move the current item to the specified position in the items array. only works if the new position
      *  is before the current position. also advances the current pointer */
     private insertInto(position:number):void
     {
+        if (position+1==this.currentIndex)
+        {
+            this.advanceCurrent();
+            return;
+        }
+
         var currentItem:SortItem=this.items[this.currentIndex];
 
         _.remove(this.items,(x:SortItem)=>{
@@ -118,12 +140,13 @@ export default class IterableInsertionSorter
         this.currentIndex++;
         this.compareIndex=this.currentIndex;
 
-        if (this.currentIndex>this.items.length)
+        if (this.currentIndex>=this.items.length)
         {
             this.done=true;
         }
     }
 
+    /** compare saver testing */
     private csaverTest():void
     {
         console.log(this.csaver.compare(this.items[0],this.items[1])); //2,1?

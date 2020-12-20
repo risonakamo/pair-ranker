@@ -18,8 +18,7 @@ function main()
   render(<IndexMain/>,document.querySelector(".main"));
 
   // --- TESTING ---
-  var a=new IterableInsertionSorter(["1","4","3","2"]);
-  console.log(a);
+  new IterableInsertionSorter(["2","1","4","3"]);
   // --- END TESTING ---
 }
 

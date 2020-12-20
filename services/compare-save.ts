@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export default class ComparisonSaver
 {
     savedComparisons:SavedComparisons
@@ -11,6 +13,11 @@ export default class ComparisonSaver
      *  returns null. */
     compare(item1:SortItem,item2:SortItem):number|null
     {
+        if (item1.index==item2.index)
+        {
+            return 0;
+        }
+
         var indices:ExtractedIndicesResult=extractCompareIndices(item1,item2);
 
         if (!this.savedComparisons[indices.indicesString])
@@ -48,6 +55,6 @@ function extractCompareIndices(item1:SortItem,item2:SortItem):ExtractedIndicesRe
     return {
         indices:sortIndices,
         indicesString:sortIndices.join(","),
-        flipped:sortIndices==indices
+        flipped:!_.isEqual(sortIndices,indices)
     };
 }
